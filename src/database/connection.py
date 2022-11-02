@@ -26,5 +26,21 @@ def execute_query(query, params=None):
         print("Query executed successfully")
         connection.close()
         return cursor
-    except OSError as err:
+    except OSError as e:
         print(f"The error '{e}' occurred or the hero name is already taken")
+
+
+# ============================================================================================================================= #
+# ============================================================================================================================= #
+
+def select_all():
+    query = """
+        SELECT * FROM heroes
+    """
+
+    list_of_heroes = execute_query(query).fetchall()
+    # print(list_of_heroes)
+    for record in list_of_heroes:
+        print(record[1])
+
+select_all()
