@@ -1,6 +1,15 @@
 from database.connection import execute_query
 from pprint import pprint as pp
 
+def list_heroes():
+    query = """
+        SELECT id, name from heroes
+        """
+    list_of_heroes = execute_query(query).fetchall()
+    for record in list_of_heroes:
+        pp(record)
+
+
 def see_hero():
     query1 = """
         SELECT id, name from heroes
@@ -15,12 +24,10 @@ def see_hero():
         FROM heroes
         WHERE id = %s
     """
-    execute_query(query, params)
-    pp(query)
+    balls = execute_query(query, params).fetchone()
+    pp(balls)
     main_menu()
 
-
-# see_hero()
 
 def add_hero():
     name = input('What is the name of the hero being added to SQL Heroes?: ')
@@ -33,20 +40,18 @@ def add_hero():
     execute_query(query, params)
     main_menu()
 
-# add_hero()
 
 def remove_hero():
-    select_all()
+    list_heroes()
     whomst = input('Which hero is getting removed from SQL Heroes?: ')
     params = (whomst,)
     query = """
         DELETE FROM heroes WHERE id = %s
         """
     execute_query(query, params)
-    select_all()
+    list_heroes()
     main_menu()
 
-# remove_hero()
 
 def main_menu():
     menu_list = {
